@@ -1,0 +1,3 @@
+[submodule "osx-vm-templates"]
+	path = osx-vm-templates
+	url = ./osx-vm-templates

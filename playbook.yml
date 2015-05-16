@@ -1,0 +1,57 @@
+- hosts: all
+  tasks:  
+    - name: Set timezone to CST
+      command: sudo systemsetup -settimezone America/Chicago
+
+    - name: Install Xcode
+      script: scripts/xcode.sh
+
+    - name: Install Homebrew
+      script: scripts/homebrew.sh
+
+    - name: Update Homebrew
+      homebrew: update_homebrew=yes
+
+    - name: Install tools with homebrew
+      homebrew: name={{ item }} state=present
+      with_items:
+        - wget
+        - vim
+        - git
+        - tmux
+        - readline
+        - pandoc
+        - zsh
+        - cmake
+        - python
+        - python3
+        - reattach-to-user-namespace
+        - tree
+        - watch
+        - colordiff
+
+    - name: Tap Caskroom
+      homebrew_tap: tap=caskroom/cask
+    - name: Install brew-cask
+      homebrew: name=brew-cask
+
+    - name: Install Apps from Cask
+      homebrew_cask: name={{ item }}
+      with_items:
+        - google-chrome
+
+    - name: Install Java SDK from Cask
+      homebrew_cask: name=java
+
+    - name: Install Java development tools
+      homebrew: name=maven
+
+    - name: Install Java development apps
+      homebrew_cask: name=eclipse-java
+
+    - name: Install media apps
+      homebrew_cask: name={{ item }}
+      with_items:
+        - steam
+
+
