@@ -1,4 +1,9 @@
-These instructions describe how to get `fir-box` up and running. Throughout, we suppose we suppose `$FIR_BOX_HOME` is set to the root of the repository.
+Tools for configuring my OS X development machine
+=================================================
+
+These instructions describe how to get `fir-box` VM up and running. This VM can be used for developing Ansible-based configuration of my OS X development machine.
+
+Throughout this document, we suppose that `$FIR_BOX_HOME` is set to the root of the repository.
 
 
 ## Create Install ISO
