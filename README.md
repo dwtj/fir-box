@@ -8,12 +8,12 @@ Throughout this document, we suppose that `$FIR_BOX_HOME` is set to the root of 
 
 ## Create Install ISO
 
-First, we build the OS X install image using `osx-vm-templates/prepare_iso`. This script converts an "Install OS X" app and creates a `.dmg` image that we will next use with packer. Note that using optional switches, one can set a default root user and the root user's password. Suppose `$OS_X_INSTALL_APP` is the fully qualified path of the install `.app`.
+First, we build the OS X install image using `osx-vmware-builder/prepare_iso`. This script converts an "Install OS X" app and creates a `.dmg` image that we will next use with packer. Note that using optional switches, one can set a default root user and the root user's password. Suppose `$OS_X_INSTALL_APP` is the fully qualified path of the install `.app`.
 
     $ cd $FIR_BOX_HOME
-    $ osx-vm-templates/prepare_iso/prepare_iso.sh "$OS_X_INSTALL_APP" build
+    $ osx-vmware-builder/prepare_iso/prepare_iso.sh "$OS_X_INSTALL_APP" build
 
-This build process will put a `.dmg` file in the `build` directory. You will need to note the `md5` checksum and the exact name of the `.dmg` file. Modify the `osx-vm-templates/packer/template.json` with these values.
+This build process will put a `.dmg` file in the `build` directory. You will need to note the `md5` checksum and the exact name of the `.dmg` file. Modify the `osx-vmware-builder/template.json` with these values.
 
 
 ## Create and Add Vagrant Box
@@ -21,7 +21,7 @@ This build process will put a `.dmg` file in the `build` directory. You will nee
 Next, we use `packer` to build a `.box` file that will serve as our base vagrant image.
 
     $ cd $FIR_BOX_HOME/build
-    $ packer build ../osx-vm-templates/packer/template.json
+    $ packer build ../osx-vmware-builder/packer/template.json
 
 This should eventually create the `.box` file, which can be added to our local vagrant boxes using
 
