@@ -1,5 +1,5 @@
-- hosts: all
-  tasks:  
+- hosts: fir-box
+  tasks:
     - name: Set timezone to CST
       command: sudo systemsetup -settimezone America/Chicago
 
@@ -37,6 +37,7 @@
       homebrew_cask: name={{ item }}
       with_items:
         - google-chrome
+        - vmware-fusion
 
     - name: Install Java SDK from Cask
       homebrew_cask: name=java
@@ -47,13 +48,41 @@
     - name: Install Java development apps
       homebrew_cask: name=eclipse-java
 
+    - Name: Install media tools
+      homebrew: name={{ item }}
+      with_items:
+        - handbrakecli
+
     - name: Install media apps
       homebrew_cask: name={{ item }}
       with_items:
         - steam
+        - handbrake
 
     - name: Install dotfiles
       script: scripts/dotfiles.sh
 
 #    - name: Update vim plugins
 #      command: vim -c PluginInstall -c qall
+
+    - name: Clear dock
+      command: defaults write com.apple.dock persistent-apps -array
+
+    - name: Populate dock
+      command: defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>{{ item }}</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+      with_items:
+        - /Applications/Mail.app
+        - /Applications/Utilities/Terminal.app
+
+    - name: Reset dock
+      command: killall Dock
+
+    - name: Copy com.apple.Terminal.plist
+      copy: >
+        src='support/com.apple.Terminal.plist'
+        dest='~/Library/Preferences/com.apple.Terminal.plist'
+
+    # TODO: Why is it necessary to read Terminal's defaults to make the copied
+    # Terminal preferences work?
+    - name: Read Terminal defaults
+      command: defaults read com.apple.Terminal
