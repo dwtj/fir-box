@@ -26,6 +26,7 @@
         - tree
         - watch
         - colordiff
+        - stow
 
     - name: Tap Caskroom
       homebrew_tap: tap=caskroom/cask
@@ -51,4 +52,8 @@
       with_items:
         - steam
 
+    - name: Install dotfiles
+      script: scripts/dotfiles.sh
 
+#    - name: Update vim plugins
+#      command: vim -c PluginInstall -c qall
