@@ -3,11 +3,8 @@
     - name: Set timezone to CST
       command: sudo systemsetup -settimezone America/Chicago
 
-    - name: Install Xcode
-      script: scripts/xcode.sh
-
-    - name: Install Homebrew
-      script: scripts/homebrew.sh
+    - name: Bootstrap
+      script: scripts/bootstrap.sh
 
     - name: Update Homebrew
       homebrew: update_homebrew=yes
